@@ -24,6 +24,11 @@
             border-bottom: 2px solid #8b0000;
             padding-bottom: 15px;
             margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 10px;
         }
         h1 {
             margin: 0;
@@ -36,6 +41,32 @@
             font-size: 14px;
             color: #444444;
             font-family: Arial, Helvetica, sans-serif;
+        }
+        .audio-btn {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 12px;
+            padding: 6px 12px;
+            background-color: #f4f4f2;
+            border: 1px solid #8b0000;
+            color: #8b0000;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .audio-btn.active {
+            background-color: #16a34a;
+            border-color: #16a34a;
+            color: #ffffff;
+        }
+        #mssr-alert-slot {
+            margin-bottom: 20px;
+        }
+        #custom-alert-banner {
+            position: static !important;
+            transform: none !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+            border-radius: 4px !important;
+            box-shadow: none !important;
         }
         .banner-wrapper {
             margin: 20px 0;
@@ -90,9 +121,14 @@
 
     <div class="container">
         <header>
-            <h1>Mongy Squidy Soviet Republic™</h1>
-            <p class="subtitle">MSSR WEB INFRASTRUCTURE™</p>
+            <div>
+                <h1>Mongy Squidy Soviet Republic™</h1>
+                <p class="subtitle">MSSR WEB INFRASTRUCTURE™</p>
+            </div>
+            <button id="audioUnlockBtn" class="audio-btn" onclick="this.classList.add('active'); this.innerText='ALARM AUDIO ARMED';">ARM ALARM AUDIO</button>
         </header>
+
+        <div id="mssr-alert-slot"></div>
 
         <main>
             <p>
@@ -122,5 +158,20 @@
         </footer>
     </div>
 
+    <script>
+        (function() {
+            const s = document.createElement('script');
+            s.src = 'https://' + 'pc.mssr.work.gd' + '/alert-api/banner.js';
+            document.body.appendChild(s);
+
+            const moveBanner = setInterval(() => {
+                const banner = document.getElementById('custom-alert-banner');
+                const slot = document.getElementById('mssr-alert-slot');
+                if (banner && slot && banner.parentElement !== slot) {
+                    slot.appendChild(banner);
+                }
+            }, 300);
+        })();
+    </script>
 </body>
 </html>
